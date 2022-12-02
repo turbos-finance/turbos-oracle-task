@@ -93,7 +93,7 @@ export class TimeTaskService {
       const end = Date.now();
       console.log(`time transaction: ${transactionDigest}; time: ${((end - start) / 1000).toFixed(0)}s`);
     } catch (err: any) {
-      console.log(`TimeTask: ${err.message}`);
+      console.log(`TimeTask Error : ${err.message}`);
     }
 
     this.run();

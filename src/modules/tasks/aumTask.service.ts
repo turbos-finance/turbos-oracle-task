@@ -94,7 +94,7 @@ export class AumTaskService {
       const end = Date.now();
       console.log(`Aum transaction: ${transactionDigest}; time: ${((end - start) / 1000).toFixed(0)}s`);
     } catch (err: any) {
-      console.log(`AumTask: ${err.message}`);
+      console.log(`AumTask Erro: ${err.message}`);
     }
 
     this.run();
