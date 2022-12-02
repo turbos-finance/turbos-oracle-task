@@ -11,6 +11,7 @@ import { ConfigModule } from '../config/config.module';
 // import { ShadowsModule } from '../shadows/shadows.module';
 
 import { TasksService } from './tasks.service';
+import { TimeTaskService } from './timeTask.service';
 
 @Module({
   imports: [
@@ -22,6 +23,9 @@ import { TasksService } from './tasks.service';
     // HttpServerModule,
     // AddressModule
   ],
-  providers: [TasksService]
+  providers: [
+    TasksService,
+    TimeTaskService
+  ]
 })
 export class TasksModule { }

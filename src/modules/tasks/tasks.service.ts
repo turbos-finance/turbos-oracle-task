@@ -32,50 +32,51 @@ export class TasksService {
   constructor(
     private readonly configService: ConfigService,
   ) {
-    this.init();
+    // this.init();
   }
 
-  async init() {
-    this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
-    this.signer = await this.getKeypair();
-  }
+  // async init() {
+  //   this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
+  //   this.signer = await this.getKeypair();
+    
+  // }
 
-  async getKeypair() {
-    const keypair = Ed25519Keypair.deriveKeypair(this.configService.get('PRIVACYKEY'))
-    let address = keypair?.getPublicKey().toSuiAddress() || null;
-    if (address && !address.startsWith('0x')) {
-      address = `0x${address}`;
-    }
-    if (!address) return;
-    return new RawSigner(keypair, this.provider);
-  }
+  // async getKeypair() {
+  //   const keypair = Ed25519Keypair.deriveKeypair(this.configService.get('PRIVACYKEY'))
+  //   let address = keypair?.getPublicKey().toSuiAddress() || null;
+  //   if (address && !address.startsWith('0x')) {
+  //     address = `0x${address}`;
+  //   }
+  //   if (!address) return;
+  //   return new RawSigner(keypair, this.provider);
+  // }
 
-  // every 60s run
-  @Cron('0 * * * * *')
-  async handleCron() {
+  // // every 60s run
+  // @Cron('0 * * * * *')
+  // async handleCron() {
 
-  }
+  // }
 
-  // every 2s run
-  @Cron('*/2 * * * * *')
-  async getQty() {
+  // // every 2s run
+  // @Cron('*/2 * * * * *')
+  // async getQty() {
 
-  }
+  // }
 
-  // every 1h run
-  @Cron('1 0 * * * *')
-  async hoursStatistics() {
+  // // every 1h run
+  // @Cron('1 0 * * * *')
+  // async hoursStatistics() {
 
-  }
+  // }
 
-  // every 30 minute run
-  @Cron('0 */30 * * * *')
-  async updateContractDate() {
-  }
+  // // every 30 minute run
+  // @Cron('0 */30 * * * *')
+  // async updateContractDate() {
+  // }
 
-  // every 10 minute run
-  @Cron('0 */10 * * * *')
-  async tenMinitesRun() {
+  // // every 10 minute run
+  // @Cron('0 */10 * * * *')
+  // async tenMinitesRun() {
 
-  }
+  // }
 }
