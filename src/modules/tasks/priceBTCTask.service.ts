@@ -25,9 +25,11 @@ import { EvmPriceServiceConnection, PriceFeed } from '@pythnetwork/pyth-evm-js';
 
 import { ConfigService } from '../config/config.service';
 
-const packageObjectId = '0x46991105f866d15a079f688f1cc121396be95963';
+const immutableToken = '0xe7ff912ae181fa6ad03ce9dd8154161c67addfe9';
+const coinPackageObjectId = '0x676fd08a38a0eef77b0ac9d9bf478a32e9c45d05';
+const packageObjectId = '0x3102ed43f0d6260241d3bbf8942383dde52a6fcc';
 
-const objectId = '0x52ee4034ac647a276337949a6e10146b217a62a2';
+const objectId = '0x87790770eb751986daf21f74d254a345afc7b568';
 const symbol = 'BTC';
 const priceId = '0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b';
 
@@ -121,7 +123,7 @@ export class PriceBTCTaskService {
         packageObjectId: packageObjectId,
         module: 'price',
         function: 'update_price_feed',
-        typeArguments: [],
+        typeArguments: [`${coinPackageObjectId}::btc::BTC`],
         arguments: [
           this.obj.objectId,
           this.objectId,

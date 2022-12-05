@@ -20,14 +20,17 @@ import {
   Ed25519PublicKey,
   mnemonicToSeedHex,
   getTransactionDigest,
+  getObjectType
 } from '@mysten/sui.js';
 import { EvmPriceServiceConnection, PriceFeed } from '@pythnetwork/pyth-evm-js';
 
 import { ConfigService } from '../config/config.service';
 
-const packageObjectId = '0xfc20199a519b5b551e82daef04369ee0d3e91e25';
+const immutableToken = '0xdde3b0100dc57a255b02a9a0025ad5e4c129dc30';
+const coinPackageObjectId = '0x21947bdf8bec8fdd299c303dff77f12893dab004';
+const packageObjectId = '0x190d38d4c0ba26d8b4298a04e077bde79f8f720e';
 
-const objectId = '0xe1d93a1e7a20abff5e9b28ada5b1d52f1d5c32cb';
+const objectId = '0xb8fcb4a282978f3f36cdda569adf52cbb53e2161';
 const symbol = 'USDC';
 const priceId = '0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722';
 
@@ -121,7 +124,7 @@ export class PriceUSDCTaskService {
         packageObjectId: packageObjectId,
         module: 'price',
         function: 'update_price_feed',
-        typeArguments: [],
+        typeArguments: [`${coinPackageObjectId}::usdc::USDC`],
         arguments: [
           this.obj.objectId,
           this.objectId,

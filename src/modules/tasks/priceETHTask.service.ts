@@ -25,9 +25,11 @@ import { EvmPriceServiceConnection, PriceFeed } from '@pythnetwork/pyth-evm-js';
 
 import { ConfigService } from '../config/config.service';
 
-const packageObjectId = '0x745d1d067d9a0503dd61aaa481e00dc26a22dae9';
+const immutableToken = '0xbe26138d52965e11d1e95be4e01f42288ad4cf94';
+const coinPackageObjectId = '0x1c744ef099d7258e7a2980ead4bd278429af2e6c';
+const packageObjectId = '0xc4060d28f5f7ca8865c486bbe2323d212a20963f';
 
-const objectId = '0x507dc90de342da4599e0be7db2c76f96eeb5e060';
+const objectId = '0xa4091e7befbc0f355d7da84c8fa1764ffb4dedcd';
 const symbol = 'ETH';
 const priceId = '0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6';
 
@@ -122,7 +124,7 @@ export class PriceETHTaskService {
         packageObjectId: packageObjectId,
         module: 'price',
         function: 'update_price_feed',
-        typeArguments: [],
+        typeArguments: [`${coinPackageObjectId}::eth::ETH`],
         arguments: [
           this.obj.objectId,
           this.objectId,
