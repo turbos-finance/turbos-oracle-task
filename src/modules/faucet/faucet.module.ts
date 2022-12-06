@@ -3,17 +3,17 @@
  */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '../config/config.module';
-import { GasController } from './gas.controller';
+import { FaucetController } from './faucet.controller';
 
-import { GasService } from './gas.service';
+import { FaucetService } from './faucet.service';
 
 @Module({
   imports: [
     ConfigModule,
   ],
-  controllers: [GasController],
+  controllers: [FaucetController],
   providers: [
-    GasService
+    FaucetService
   ]
 })
-export class GasModule { }
+export class FaucetModule { }

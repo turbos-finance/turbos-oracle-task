@@ -29,7 +29,7 @@ import { ConfigService } from '../config/config.service';
 
 
 @Injectable()
-export class GasService {
+export class FaucetService {
   signer: RawSigner;
   provider: JsonRpcProvider;
   address: SuiAddress

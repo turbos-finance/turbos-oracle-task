@@ -6,7 +6,7 @@ import { TransformInterceptor } from "src/interceptor/transform.interceptor";
 // modules
 import { AppModule } from './app/app.module';
 import { ConfigModule } from "./config/config.module";
-import { GasModule } from "./gas/gas.module";
+import { FaucetModule } from "./faucet/faucet.module";
 import { TasksModule } from "./tasks/tasks.module";
 
 @Module({
@@ -14,7 +14,7 @@ import { TasksModule } from "./tasks/tasks.module";
     AppModule,
     ConfigModule,
     TasksModule,
-    GasModule
+    FaucetModule
   ],
   providers: [
     {
