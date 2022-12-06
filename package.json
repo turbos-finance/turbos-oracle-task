@@ -30,6 +30,7 @@
     "@pythnetwork/pyth-evm-js": "^1.0.1",
     "bignumber.js": "^9.1.0",
     "dotenv": "^16.0.3",
+    "helmet": "^6.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

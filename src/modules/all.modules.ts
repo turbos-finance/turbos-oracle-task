@@ -1,8 +1,12 @@
 import { Module } from "@nestjs/common";
+import { APP_INTERCEPTOR } from "@nestjs/core";
+import { ErrorsInterceptor } from "src/interceptor/errors.interceptor";
+import { TransformInterceptor } from "src/interceptor/transform.interceptor";
 
 // modules
 import { AppModule } from './app/app.module';
 import { ConfigModule } from "./config/config.module";
+import { GasModule } from "./gas/gas.module";
 import { TasksModule } from "./tasks/tasks.module";
 
 @Module({
@@ -10,8 +14,17 @@ import { TasksModule } from "./tasks/tasks.module";
     AppModule,
     ConfigModule,
     TasksModule,
+    GasModule
   ],
   providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ErrorsInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
   ]
 })
 
