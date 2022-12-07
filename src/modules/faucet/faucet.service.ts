@@ -23,13 +23,13 @@ import {
   isValidSuiAddress,
   SuiExecuteTransactionResponse
 } from '@mysten/sui.js';
-import { alreadyClaimedException, insufficientTokenBalanceException, tokenNotExistException, wrongSuiAddressException } from "src/exception/auth.exception";
-import tokenFaucetConfig from "src/config/token.faucet.config";
+import { alreadyClaimedException, insufficientTokenBalanceException, tokenNotExistException, wrongSuiAddressException } from "../../exception/auth.exception";
+import tokenFaucetConfig from "../../config/token.faucet.config";
 
 import { ConfigService } from '../config/config.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FaucetEntity } from 'src/entities/faucet.entity';
+import { FaucetEntity } from '../../entities/faucet.entity';
 
 
 @Injectable()

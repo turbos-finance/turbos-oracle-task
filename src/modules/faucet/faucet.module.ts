@@ -5,7 +5,7 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FaucetEntity } from 'src/entities/faucet.entity';
+import { FaucetEntity } from '../../entities/faucet.entity';
 import { ConfigModule } from '../config/config.module';
 import { FaucetController } from './faucet.controller';
 

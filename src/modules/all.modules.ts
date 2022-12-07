@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { APP_INTERCEPTOR } from "@nestjs/core";
-import { ErrorsInterceptor } from "src/interceptor/errors.interceptor";
-import { TransformInterceptor } from "src/interceptor/transform.interceptor";
+import { ErrorsInterceptor } from "../interceptor/errors.interceptor";
+import { TransformInterceptor } from "../interceptor/transform.interceptor";
 
 // modules
 import { AppModule } from './app/app.module';

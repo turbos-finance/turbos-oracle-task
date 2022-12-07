@@ -7,7 +7,7 @@ import {
   } from '@nestjs/common';
   import { Observable, TimeoutError } from 'rxjs';
   import { catchError, timeout } from 'rxjs/operators';
-  import { BusinessException } from 'src/exception/business.exception';
+  import { BusinessException } from '../exception/business.exception';
   
   @Injectable()
   export class ErrorsInterceptor implements NestInterceptor {
