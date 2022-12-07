@@ -26,6 +26,9 @@ import { insufficientTokenBalanceException, tokenNotExistException, wrongSuiAddr
 import tokenFaucetConfig from "src/config/token.faucet.config";
 
 import { ConfigService } from '../config/config.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { FaucetEntity } from 'src/entities/faucet.entity';
 
 
 @Injectable()
@@ -35,6 +38,9 @@ export class FaucetService {
   address: SuiAddress
 
   constructor(
+    @InjectRepository(FaucetEntity)
+    private readonly prirceRepository: Repository<FaucetEntity>,
+    
     private readonly configService: ConfigService,
   ) {
     this.init();
@@ -42,7 +48,7 @@ export class FaucetService {
 
   async init() {
     this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
-    this.getKeypair();
+    await this.getKeypair();
   }
 
   async getKeypair() {
@@ -54,7 +60,6 @@ export class FaucetService {
     if (!address) return;
     this.signer = new RawSigner(keypair, this.provider);
     this.address = address;
-    return new RawSigner(keypair, this.provider);
   }
 
 

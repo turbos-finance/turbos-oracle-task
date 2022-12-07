@@ -6,11 +6,13 @@ import { TransformInterceptor } from "src/interceptor/transform.interceptor";
 // modules
 import { AppModule } from './app/app.module';
 import { ConfigModule } from "./config/config.module";
+import { DatabaseModule } from "./database/database.module";
 import { FaucetModule } from "./faucet/faucet.module";
 import { TasksModule } from "./tasks/tasks.module";
 
 @Module({
   imports: [
+    DatabaseModule,
     AppModule,
     ConfigModule,
     TasksModule,
