@@ -77,6 +77,7 @@ export class FaucetService {
 
   async faucet(account: string, symbol: string): Promise<any> {
     const config = tokenFaucetConfig[this.configService.get('NETWORK')][symbol.toLocaleUpperCase()];
+    const timestamp = this.configService.get('FAUCET_TIMESTMAP');
 
     if (!config) {
       throw new tokenNotExistException();
@@ -86,9 +87,9 @@ export class FaucetService {
       throw new wrongSuiAddressException();
     }
 
-    const faucetData = await this.faucetRepository.findOne({ where: { account } });
+    const faucetData = await this.faucetRepository.findOne({ where: { account, symbol } });
 
-    if (faucetData && faucetData.lastTimestamp - Date.now() < 1000 * 60 * 60 * 24) {
+    if (faucetData && faucetData.lastTimestamp - Date.now() < 1000 * 60 * 60 * Number(timestamp)) {
       throw new alreadyClaimedException();
     }
 

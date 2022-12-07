@@ -20,7 +20,7 @@ export class insufficientTokenBalanceException extends BusinessException {
 
 export class alreadyClaimedException extends BusinessException {
   constructor() {
-    super(1003, "Claimed it already, try again 24 hours later");
+    super(1003, "Claimed it already, try again 1 hours later");
   }
 }
 

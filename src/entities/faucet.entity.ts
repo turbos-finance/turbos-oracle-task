@@ -12,7 +12,7 @@ export class FaucetEntity {
   @PrimaryColumn()
   account: string;
 
-  @Column()
+  @PrimaryColumn()
   symbol: string;
 
   @Column({ name: "last_timestamp", type: "bigint" })
