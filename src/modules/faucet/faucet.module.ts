@@ -17,7 +17,7 @@ import { FaucetService } from './faucet.service';
       FaucetEntity,
     ]),
     ThrottlerModule.forRoot({
-      ttl: 30,
+      ttl: 10,
       limit: 1,
     }),
     ConfigModule,

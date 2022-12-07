@@ -7,6 +7,6 @@ export class FaucetController {
 
   @Post()
   postGas(@Body() body: any): Promise<any> {
-    return this.faucetService.gas(body.account, body.token);
+    return this.faucetService.faucet(body.account, body.symbol);
   }
 }

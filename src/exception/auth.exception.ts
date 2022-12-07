@@ -29,6 +29,3 @@ export class busyException extends BusinessException {
     super(1004, "Busy now, try again later");
   }
 }
-
-
-

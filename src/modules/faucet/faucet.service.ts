@@ -20,9 +20,10 @@ import {
   mnemonicToSeedHex,
   getTransactionDigest,
   SuiAddress,
-  isValidSuiAddress
+  isValidSuiAddress,
+  SuiExecuteTransactionResponse
 } from '@mysten/sui.js';
-import { insufficientTokenBalanceException, tokenNotExistException, wrongSuiAddressException } from "src/exception/auth.exception";
+import { alreadyClaimedException, insufficientTokenBalanceException, tokenNotExistException, wrongSuiAddressException } from "src/exception/auth.exception";
 import tokenFaucetConfig from "src/config/token.faucet.config";
 
 import { ConfigService } from '../config/config.service';
@@ -35,15 +36,27 @@ import { FaucetEntity } from 'src/entities/faucet.entity';
 export class FaucetService {
   signer: RawSigner;
   provider: JsonRpcProvider;
-  address: SuiAddress
+  address: SuiAddress;
+  isFaucetRun: boolean = false;
 
   constructor(
     @InjectRepository(FaucetEntity)
-    private readonly prirceRepository: Repository<FaucetEntity>,
-    
+    private readonly faucetRepository: Repository<FaucetEntity>,
+
     private readonly configService: ConfigService,
   ) {
     this.init();
+  }
+
+  async saveFaucet(account: string, symbol: string, isFaucet: number = 0): Promise<FaucetEntity> {
+    const faucetDate = this.faucetRepository.create();
+    const data = this.faucetRepository.merge(faucetDate, {
+      account,
+      symbol,
+      lastTimestamp: Date.now(),
+      isFaucet
+    });
+    return await this.faucetRepository.save(data);
   }
 
   async init() {
@@ -62,9 +75,8 @@ export class FaucetService {
     this.address = address;
   }
 
-
-  async gas(account: string, token: string): Promise<any> {
-    const config = tokenFaucetConfig[this.configService.get('NETWORK')][token.toLocaleUpperCase()];
+  async faucet(account: string, symbol: string): Promise<any> {
+    const config = tokenFaucetConfig[this.configService.get('NETWORK')][symbol.toLocaleUpperCase()];
 
     if (!config) {
       throw new tokenNotExistException();
@@ -73,6 +85,41 @@ export class FaucetService {
     if (!isValidSuiAddress(account)) {
       throw new wrongSuiAddressException();
     }
+
+    const faucetData = await this.faucetRepository.findOne({ where: { account } });
+
+    if (faucetData && faucetData.lastTimestamp - Date.now() < 1000 * 60 * 60 * 24) {
+      throw new alreadyClaimedException();
+    }
+
+    await this.saveFaucet(account, symbol.toLocaleUpperCase());
+
+    if (!this.isFaucetRun) {
+      this.run();
+    }
+
+    return {
+      message: 'Receive successfully'
+    };
+  }
+
+  async run() {
+    this.isFaucetRun = true;
+    const faucetData = await this.faucetRepository.findOne({
+      where: {
+        isFaucet: 0
+      },
+      order: {
+        lastTimestamp: 'ASC'
+      }
+    });
+
+    if (!faucetData) {
+      this.isFaucetRun = false;
+      return;
+    }
+
+    const config = tokenFaucetConfig[this.configService.get('NETWORK')][faucetData.symbol.toLocaleUpperCase()];
 
     const actualAmount = BigInt(config.number + 1000);
     const coinsWithSufficientAmount = await this.provider.selectCoinsWithBalanceGreaterThanOrEqual(
@@ -87,19 +134,15 @@ export class FaucetService {
 
     const result = coinsWithSufficientAmount.map((item: GetObjectDataResponse | SuiMoveObject) => Coin.getID(item));
 
-    const trans = await this.signer.pay({
+    const res = await this.signer.pay({
       inputCoins: result,
-      recipients: [account],
+      recipients: [faucetData.account],
       amounts: [config.number],
       gasBudget: 1000,
     });
 
-    return {
-      data: trans
-    };
-  }
-
-  async run(){
-    
+    console.log(`${faucetData.symbol} faucet transaction: ${getTransactionDigest(res)}`);
+    await this.saveFaucet(faucetData.account, faucetData.symbol, 1);
+    this.run();
   }
 }

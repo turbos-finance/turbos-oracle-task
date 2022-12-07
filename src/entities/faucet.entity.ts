@@ -15,6 +15,9 @@ export class FaucetEntity {
   @Column()
   symbol: string;
 
-  @CreateDateColumn({ name: "last_timestamp" })
-  lastTimestamp: Date;
+  @Column({ name: "last_timestamp", type: "bigint" })
+  lastTimestamp: number;
+
+  @Column({ name: "is_faucet", type: "int" })
+  isFaucet: number;
 }
