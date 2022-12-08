@@ -141,7 +141,8 @@ export class FaucetService {
     );
 
     if (coinsWithSufficientAmount.length < 1) {
-      throw new insufficientTokenBalanceException();
+      this.isFaucetRun = false;
+      return;
     }
 
     const result = coinsWithSufficientAmount.map((item: GetObjectDataResponse | SuiMoveObject) => Coin.getID(item));
