@@ -24,14 +24,7 @@ import {
 import { EvmPriceServiceConnection, PriceFeed } from '@pythnetwork/pyth-evm-js';
 
 import { ConfigService } from '../config/config.service';
-
-const immutableToken = '0xe7ff912ae181fa6ad03ce9dd8154161c67addfe9';
-const coinPackageObjectId = '0x676fd08a38a0eef77b0ac9d9bf478a32e9c45d05';
-const packageObjectId = '0x3102ed43f0d6260241d3bbf8942383dde52a6fcc';
-
-const objectId = '0x87790770eb751986daf21f74d254a345afc7b568';
-const symbol = 'BTC';
-const priceId = '0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b';
+import tokenTaskConfig from '../../config/token.task.config';
 
 @Injectable()
 export class PriceBTCTaskService {
@@ -49,17 +42,36 @@ export class PriceBTCTaskService {
   symbol: string;
 
   priceId: string;
+  coinPackageObjectId:string;
 
   constructor(
     private readonly configService: ConfigService,
   ) {
-    this.packageObjectId = packageObjectId;
-    this.objectId = objectId;
-    this.symbol = symbol;
-    this.priceId = priceId;
+    // this.packageObjectId = packageObjectId;
+    // this.objectId = objectId;
+    // this.symbol = symbol;
+    // this.priceId = priceId;
 
     this.init();
   }
+
+  async getSetting(symbol: string): Promise<boolean> {
+    const network = this.configService.get('NETWORK');
+    const config = tokenTaskConfig[network];
+    if (!config) {
+      return false;
+    }
+
+    const symbolConfig = config[symbol];
+    this.coinPackageObjectId = symbolConfig.coinPackageObjectId;
+    this.packageObjectId = symbolConfig.packageObjectId;
+    this.objectId = symbolConfig.objectId;
+    this.symbol = symbolConfig.symbol;
+    this.priceId = symbolConfig.priceId;
+
+    return true;
+  }
+
 
   async getPrice() {
     const connection = new EvmPriceServiceConnection(this.configService.get('PYTH_NETWORK'));
@@ -70,6 +82,13 @@ export class PriceBTCTaskService {
   }
 
   async init() {
+    
+    const setting = await this.getSetting('BTC'.toLocaleUpperCase());
+
+    if (!setting) {
+      return;
+    }
+
     if (this.configService.get('PRICE_TASK') !== '1') {
       return;
     }
@@ -120,10 +139,10 @@ export class PriceBTCTaskService {
 
     try {
       const moveCallTxn = await this.signer.executeMoveCall({
-        packageObjectId: packageObjectId,
+        packageObjectId: this.packageObjectId,
         module: 'price',
         function: 'update_price_feed',
-        typeArguments: [`${coinPackageObjectId}::btc::BTC`],
+        typeArguments: [this.coinPackageObjectId],
         arguments: [
           this.obj.objectId,
           this.objectId,

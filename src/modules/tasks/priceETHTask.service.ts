@@ -24,14 +24,7 @@ import {
 import { EvmPriceServiceConnection, PriceFeed } from '@pythnetwork/pyth-evm-js';
 
 import { ConfigService } from '../config/config.service';
-
-const immutableToken = '0xbe26138d52965e11d1e95be4e01f42288ad4cf94';
-const coinPackageObjectId = '0x1c744ef099d7258e7a2980ead4bd278429af2e6c';
-const packageObjectId = '0xc4060d28f5f7ca8865c486bbe2323d212a20963f';
-
-const objectId = '0xa4091e7befbc0f355d7da84c8fa1764ffb4dedcd';
-const symbol = 'ETH';
-const priceId = '0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6';
+import tokenTaskConfig from '../../config/token.task.config';
 
 @Injectable()
 export class PriceETHTaskService {
@@ -49,17 +42,36 @@ export class PriceETHTaskService {
   symbol: string;
 
   priceId: string;
+  coinPackageObjectId:string;
 
   constructor(
     private readonly configService: ConfigService,
   ) {
-    this.packageObjectId = packageObjectId;
-    this.objectId = objectId;
-    this.symbol = symbol;
-    this.priceId = priceId;
+    // this.packageObjectId = packageObjectId;
+    // this.objectId = objectId;
+    // this.symbol = symbol;
+    // this.priceId = priceId;
 
     this.init();
   }
+
+  async getSetting(symbol: string): Promise<boolean> {
+    const network = this.configService.get('NETWORK');
+    const config = tokenTaskConfig[network];
+    if (!config) {
+      return false;
+    }
+
+    const symbolConfig = config[symbol];
+    this.coinPackageObjectId = symbolConfig.coinPackageObjectId;
+    this.packageObjectId = symbolConfig.packageObjectId;
+    this.objectId = symbolConfig.objectId;
+    this.symbol = symbolConfig.symbol;
+    this.priceId = symbolConfig.priceId;
+
+    return true;
+  }
+
 
   async getPrice() {
     const connection = new EvmPriceServiceConnection(this.configService.get('PYTH_NETWORK'));
@@ -71,6 +83,12 @@ export class PriceETHTaskService {
   }
 
   async init() {
+    const setting = await this.getSetting('ETH'.toLocaleUpperCase());
+
+    if (!setting) {
+      return;
+    }
+
     if (this.configService.get('PRICE_TASK') !== '1') {
       return;
     }
@@ -121,10 +139,10 @@ export class PriceETHTaskService {
 
     try {
       const moveCallTxn = await this.signer.executeMoveCall({
-        packageObjectId: packageObjectId,
+        packageObjectId: this.packageObjectId,
         module: 'price',
         function: 'update_price_feed',
-        typeArguments: [`${coinPackageObjectId}::eth::ETH`],
+        typeArguments: [this.coinPackageObjectId],
         arguments: [
           this.obj.objectId,
           this.objectId,

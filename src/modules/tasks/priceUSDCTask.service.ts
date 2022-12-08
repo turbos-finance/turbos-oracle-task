@@ -25,14 +25,7 @@ import {
 import { EvmPriceServiceConnection, PriceFeed } from '@pythnetwork/pyth-evm-js';
 
 import { ConfigService } from '../config/config.service';
-
-const immutableToken = '0xdde3b0100dc57a255b02a9a0025ad5e4c129dc30';
-const coinPackageObjectId = '0x21947bdf8bec8fdd299c303dff77f12893dab004';
-const packageObjectId = '0x190d38d4c0ba26d8b4298a04e077bde79f8f720e';
-
-const objectId = '0xb8fcb4a282978f3f36cdda569adf52cbb53e2161';
-const symbol = 'USDC';
-const priceId = '0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722';
+import tokenTaskConfig from '../../config/token.task.config';
 
 @Injectable()
 export class PriceUSDCTaskService {
@@ -50,16 +43,29 @@ export class PriceUSDCTaskService {
   symbol: string;
 
   priceId: string;
+  coinPackageObjectId: string;
 
   constructor(
     private readonly configService: ConfigService,
   ) {
-    this.packageObjectId = packageObjectId;
-    this.objectId = objectId;
-    this.symbol = symbol;
-    this.priceId = priceId;
-
     this.init();
+  }
+
+  async getSetting(symbol: string): Promise<boolean> {
+    const network = this.configService.get('NETWORK');
+    const config = tokenTaskConfig[network];
+    if (!config) {
+      return false;
+    }
+
+    const symbolConfig = config[symbol];
+    this.coinPackageObjectId = symbolConfig.coinPackageObjectId;
+    this.packageObjectId = symbolConfig.packageObjectId;
+    this.objectId = symbolConfig.objectId;
+    this.symbol = symbolConfig.symbol;
+    this.priceId = symbolConfig.priceId;
+
+    return true;
   }
 
   async getPrice() {
@@ -71,6 +77,12 @@ export class PriceUSDCTaskService {
   }
 
   async init() {
+    const setting = await this.getSetting('USDC'.toLocaleUpperCase());
+
+    if (!setting) {
+      return;
+    }
+
     if (this.configService.get('PRICE_TASK') !== '1') {
       return;
     }
@@ -121,10 +133,10 @@ export class PriceUSDCTaskService {
 
     try {
       const moveCallTxn = await this.signer.executeMoveCall({
-        packageObjectId: packageObjectId,
+        packageObjectId: this.packageObjectId,
         module: 'price',
         function: 'update_price_feed',
-        typeArguments: [`${coinPackageObjectId}::usdc::USDC`],
+        typeArguments: [this.coinPackageObjectId],
         arguments: [
           this.obj.objectId,
           this.objectId,

@@ -87,9 +87,20 @@ export class FaucetService {
       throw new wrongSuiAddressException();
     }
 
-    const faucetData = await this.faucetRepository.findOne({ where: { account, symbol } });
+    const actualAmount = BigInt(config.balance * 10 ** config.decimals + 1000);
+    const coinsWithSufficientAmount = await this.provider.selectCoinsWithBalanceGreaterThanOrEqual(
+      this.address,
+      actualAmount,
+      config.type
+    );
 
-    if (faucetData && faucetData.lastTimestamp - Date.now() < 1000 * 60 * 60 * Number(timestamp)) {
+    if (coinsWithSufficientAmount.length < 1) {
+      throw new insufficientTokenBalanceException();
+    }
+
+    const faucetData = await this.faucetRepository.findOne({ where: { account, symbol, isFaucet: 1 } });
+
+    if (faucetData && Date.now() - faucetData.lastTimestamp < 1000 * 60 * 60 * Number(timestamp)) {
       throw new alreadyClaimedException();
     }
 
@@ -122,7 +133,7 @@ export class FaucetService {
 
     const config = tokenFaucetConfig[this.configService.get('NETWORK')][faucetData.symbol.toLocaleUpperCase()];
 
-    const actualAmount = BigInt(config.number + 1000);
+    const actualAmount = BigInt(config.balance * 10 ** config.decimals + 1000);
     const coinsWithSufficientAmount = await this.provider.selectCoinsWithBalanceGreaterThanOrEqual(
       this.address,
       actualAmount,
@@ -138,7 +149,7 @@ export class FaucetService {
     const res = await this.signer.pay({
       inputCoins: result,
       recipients: [faucetData.account],
-      amounts: [config.number],
+      amounts: [config.balance * 10 ** config.decimals],
       gasBudget: 1000,
     });
 
