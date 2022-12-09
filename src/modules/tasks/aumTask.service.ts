@@ -23,9 +23,7 @@ import {
 } from '@mysten/sui.js';
 
 import { ConfigService } from '../config/config.service';
-
-const shared = '0x1baef83150ab5b3ebd8f27b54bc21d7a42a7ecbc';
-const packageObjectId = '0xb385af6057e8de63dfbdc64d9da12d94d5a41adb';
+import { contractConfig, aumOracleConfig } from '../../config/aum.oracle.config';
 
 @Injectable()
 export class AumTaskService {
@@ -38,25 +36,27 @@ export class AumTaskService {
   constructor(
     private readonly configService: ConfigService,
   ) {
-    this.shared = shared;
-    this.packageObjectId = packageObjectId;
+    const config = aumOracleConfig[this.configService.get('NETWORK')];
+    this.shared = config.sharedObjectId;
+    this.packageObjectId = config.packageObjectId;
 
     this.init();
   }
 
   async init() {
+    this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
+
     if (this.configService.get('AUM_TASK') !== '1') {
       return;
     }
 
-    this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
     const { signer, address } = await this.getKeypair();
 
     this.signer = signer;
     this.account = address;
 
     const objects = await this.provider.getObjectsOwnedByAddress(address);
-    this.obj = objects.find((item: SuiObjectInfo) => item.type.indexOf(`${packageObjectId}::aum::AuthorityCap`) > -1);
+    this.obj = objects.find((item: SuiObjectInfo) => item.type.indexOf(`${this.packageObjectId}::aum::AuthorityCap`) > -1);
 
     if (!this.obj || !this.signer || !this.account) return;
 
@@ -78,13 +78,13 @@ export class AumTaskService {
     const start = Date.now();
     try {
       const moveCallTxn = await this.signer.executeMoveCall({
-        packageObjectId: packageObjectId,
+        packageObjectId: this.packageObjectId,
         module: 'aum',
         function: 'update',
         typeArguments: [],
         arguments: [
           this.obj.objectId,
-          shared,
+          this.shared,
           10000000000000,
           Date.now()
         ],
@@ -100,32 +100,4 @@ export class AumTaskService {
     this.run();
   }
 
-  // // every 60s run
-  // @Cron('0 * * * * *')
-  // async handleCron() {
-
-  // }
-
-  // every 2s run
-  // @Cron('*/2 * * * * *')
-  // async runTimeTask() {
-  //   this.run();
-  // }
-
-  // // every 1h run
-  // @Cron('1 0 * * * *')
-  // async hoursStatistics() {
-
-  // }
-
-  // // every 30 minute run
-  // @Cron('0 */30 * * * *')
-  // async updateContractDate() {
-  // }
-
-  // // every 10 minute run
-  // @Cron('0 */10 * * * *')
-  // async tenMinitesRun() {
-
-  // }
 }

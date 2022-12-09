@@ -23,9 +23,7 @@ import {
 } from '@mysten/sui.js';
 
 import { ConfigService } from '../config/config.service';
-
-const shared = '0x97fcd0a08770552f456c8c7d8b89d3520b644d34';
-const packageObjectId = '0x2046307f7787ad605261b3b82057daa5fe5884ba';
+import { timeOracleConfig } from '../../config/time.oracle.config';
 
 @Injectable()
 export class TimeTaskService {
@@ -38,8 +36,10 @@ export class TimeTaskService {
   constructor(
     private readonly configService: ConfigService,
   ) {
-    this.shared = shared;
-    this.packageObjectId = packageObjectId;
+
+    const config = timeOracleConfig[this.configService.get('NETWORK')];
+    this.shared = config.sharedObjectId;
+    this.packageObjectId = config.packageObjectId;
 
     this.init();
   }
@@ -56,7 +56,7 @@ export class TimeTaskService {
     this.account = address;
 
     const objects = await this.provider.getObjectsOwnedByAddress(address);
-    this.obj = objects.find((item: SuiObjectInfo) => item.type.indexOf(`${packageObjectId}::time::AuthorityCap`) > -1);
+    this.obj = objects.find((item: SuiObjectInfo) => item.type.indexOf(`${this.packageObjectId}::time::AuthorityCap`) > -1);
 
     if (!this.obj || !this.signer || !this.account) return;
 
@@ -78,13 +78,13 @@ export class TimeTaskService {
     const start = Date.now();
     try {
       const moveCallTxn = await this.signer.executeMoveCall({
-        packageObjectId: packageObjectId,
+        packageObjectId: this.packageObjectId,
         module: 'time',
         function: 'stamp',
         typeArguments: [],
         arguments: [
           this.obj.objectId,
-          shared,
+          this.shared,
           Date.now()
         ],
         gasBudget: 10000,
