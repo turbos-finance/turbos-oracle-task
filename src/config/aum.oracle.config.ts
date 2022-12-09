@@ -8,25 +8,25 @@ export const contractConfig: ContractConfigType = {
 		"ManagerCapObjectId": "0x2563730c4ca34da85325c36e69bc462cd514a3ed",
 		"AumOraclePackageId": "0x8f1aa56e8ed59e34b85d1d1deb260dd9e2bf9e1e",
 		"TimeOraclePackageId": "0xeef3fbe65868da00192e59371e98ec07c6017f00",
-		"PriceOraclePackageId": "0x95785b8828a07e0a1d27a8b6b6587fbec5a3555d",
+		"PriceOraclePackageId": "0x3016c3368a75b07f1ec36cd66b9bebd9b0b359a0",
 		"AumOracleObjectId": "0xe74a7cd72b04c5a7c5000db939e34cc591d31063",
 		"TimeOracleObjectId": "0xd150885f3308ff2c6d1d5c0e7dbf1ed369cf42c3",
 		"Coin": {
 			"BTC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x65f3f84f9fee0f0a31d6148005619913cc560497",
+				"PriceFeedObjectId": "0xc9b7b0d3aa42237e76d1af758a7bb90215e70569",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::btc::BTC",
 				"PoolObjectId": "0x4c2a33d9aa8d0f5efeb93fb7c2caecbdbc06d878"
 			},
 			"ETH": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x8f7aa88781115f3b66d0d61dcadc9e0e023f9b86",
+				"PriceFeedObjectId": "0x4eb9b0fc93c3769a56d0d65ffe07f6cfbdd19289",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::eth::ETH",
 				"PoolObjectId": "0xf3473a8927efeaa5cb858a1494267df62177df30"
 			},
 			"USDC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x67bde77730bce933b932e58ab1ca253b243d190a",
+				"PriceFeedObjectId": "0x8b945410f8b376cd2d737c34e5f1c6def7313b17",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC",
 				"PoolObjectId": "0xd252b935e3abce480c72e41deaaa91c00e51b3ca"
 			}

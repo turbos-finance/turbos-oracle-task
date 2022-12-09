@@ -98,10 +98,10 @@ export class PriceBTCTaskService {
     this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
     await this.getKeypair();
 
-    const objects = await this.provider.getObjectsOwnedByAddress(this.walletAddress);
-    this.obj = objects.find((item: SuiObjectInfo) => item.type.indexOf(`${this.packageObjectId}::price::AuthorityCap`) > -1);
+    // const objects = await this.provider.getObjectsOwnedByAddress(this.walletAddress);
+    // this.obj = objects.find((item: SuiObjectInfo) => item.type.indexOf(`${this.packageObjectId}::price::AuthorityCap`) > -1);
 
-    if (!this.obj || !this.signer || !this.walletAddress) return;
+    if (!this.signer || !this.walletAddress) return;
 
     this.run();
   }
@@ -144,7 +144,7 @@ export class PriceBTCTaskService {
         function: 'update_price_feed',
         typeArguments: [this.coinPackageObjectId],
         arguments: [
-          this.obj.objectId,
+          // this.obj.objectId,
           this.objectId,
           price,
           ema_price,

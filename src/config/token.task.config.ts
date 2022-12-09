@@ -5,24 +5,24 @@ const tokenTaskConfig: TokenTaskConfigType = {
 		'BTC': {
 			immutableToken: '0x9dce427c0ab627cacf5c9f9817dc9eaa7275fec5',
 			coinPackageObjectId: '0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::btc::BTC',
-			packageObjectId: '0x95785b8828a07e0a1d27a8b6b6587fbec5a3555d',
-			objectId: '0x65f3f84f9fee0f0a31d6148005619913cc560497',
+			packageObjectId: '0x3016c3368a75b07f1ec36cd66b9bebd9b0b359a0',
+			objectId: '0xc9b7b0d3aa42237e76d1af758a7bb90215e70569',
 			symbol: 'BTC',
 			priceId: '0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b'
 		},
 		'ETH': {
 			immutableToken: '0xdea10df243694b0f23c25ff09957783139b7a6d3',
 			coinPackageObjectId: '0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::eth::ETH',
-			packageObjectId: '0x95785b8828a07e0a1d27a8b6b6587fbec5a3555d',
-			objectId: '0x8f7aa88781115f3b66d0d61dcadc9e0e023f9b86',
+			packageObjectId: '0x3016c3368a75b07f1ec36cd66b9bebd9b0b359a0',
+			objectId: '0x4eb9b0fc93c3769a56d0d65ffe07f6cfbdd19289',
 			symbol: 'ETH',
 			priceId: '0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6'
 		},
 		'USDC': {
 			immutableToken: '0x574819c76410e55ecf7dd31d6d31c00a448c8af4',
 			coinPackageObjectId: '0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC',
-			packageObjectId: '0x95785b8828a07e0a1d27a8b6b6587fbec5a3555d',
-			objectId: '0x67bde77730bce933b932e58ab1ca253b243d190a',
+			packageObjectId: '0x3016c3368a75b07f1ec36cd66b9bebd9b0b359a0',
+			objectId: '0x8b945410f8b376cd2d737c34e5f1c6def7313b17',
 			symbol: 'USDC',
 			priceId: '0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722'
 		}
