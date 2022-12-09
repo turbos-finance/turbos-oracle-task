@@ -32,24 +32,27 @@ export class TimeTaskService {
   shared: string;
   packageObjectId: string;
   account: string;
-  obj: SuiObjectInfo
+  obj: SuiObjectInfo;
+  network: string;
   constructor(
     private readonly configService: ConfigService,
   ) {
+    this.network = this.configService.get('NETWORK');
 
-    const config = timeOracleConfig[this.configService.get('NETWORK')];
-    this.shared = config.sharedObjectId;
-    this.packageObjectId = config.packageObjectId;
+    const timeOracleCon = timeOracleConfig[this.network];
+    this.shared = timeOracleCon.sharedObjectId;
+    this.packageObjectId = timeOracleCon.packageObjectId;
 
     this.init();
   }
 
   async init() {
+    this.provider = new JsonRpcProvider(Network[this.network]);
+
     if (this.configService.get('TIME_TASK') !== '1') {
       return;
     }
 
-    this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
     const { signer, address } = await this.getKeypair();
 
     this.signer = signer;
@@ -98,33 +101,4 @@ export class TimeTaskService {
 
     this.run();
   }
-
-  // // every 60s run
-  // @Cron('0 * * * * *')
-  // async handleCron() {
-
-  // }
-
-  // every 2s run
-  // @Cron('*/2 * * * * *')
-  // async runTimeTask() {
-  //   this.run();
-  // }
-
-  // // every 1h run
-  // @Cron('1 0 * * * *')
-  // async hoursStatistics() {
-
-  // }
-
-  // // every 30 minute run
-  // @Cron('0 */30 * * * *')
-  // async updateContractDate() {
-  // }
-
-  // // every 10 minute run
-  // @Cron('0 */10 * * * *')
-  // async tenMinitesRun() {
-
-  // }
 }

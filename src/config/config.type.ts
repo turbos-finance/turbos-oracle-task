@@ -31,3 +31,34 @@ export type TokenTaskConfigType = {
     }
   }
 }
+
+export type OracleConfigType = {
+  [x in NetworkType]: {
+    sharedObjectId: string,
+    packageObjectId: string
+  }
+}
+
+export type ContractConfigValueType = {
+  ExchangePackageId: string,
+  VaultObjectId: string,
+  PositionsObjectId: string,
+  ManagerCapObjectId: string,
+  AumOraclePackageId: string,
+  TimeOraclePackageId: string,
+  PriceOraclePackageId: string,
+  AumOracleObjectId: string,
+  TimeOracleObjectId: string,
+  Coin: {
+    [y in SymbolType]: {
+      PackageId: string,
+      PriceFeedObjectId: string,
+      Type: string,
+      PoolObjectId: string
+    }
+  }
+}
+
+export type ContractConfigType = {
+  [x in NetworkType]: ContractConfigValueType
+}
