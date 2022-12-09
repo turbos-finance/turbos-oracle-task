@@ -91,7 +91,7 @@ export class AumTaskService {
         arguments: [
           this.obj.objectId,
           this.shared,
-          aum,
+          Number(aum.toFixed(0)),
           Date.now()
         ],
         gasBudget: 10000,
@@ -129,6 +129,7 @@ export class AumTaskService {
         if (!pool || !field) {
           return sum;
         }
+
         let price = BigNumber(field.price);
 
         let pool_amount = BigNumber(pool.pool_amounts);
@@ -157,6 +158,6 @@ export class AumTaskService {
         aum = short_profits.minus(aum).isGreaterThan(0) ? BigNumber(0) : aum.minus(short_profits);
         aum = aum_deduction.minus(aum).isGreaterThan(0) ? BigNumber(0) : aum.minus(aum_deduction);
         return sum.plus(aum)
-      }, BigNumber(0)).multipliedBy(10 ** 9).toNumber();
+      }, BigNumber(0)).toNumber();
   }
 }
