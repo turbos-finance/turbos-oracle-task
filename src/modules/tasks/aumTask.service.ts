@@ -110,8 +110,6 @@ export class AumTaskService {
   async getAumForPool(provider: JsonRpcProvider, config: ContractConfigValueType) {
     const vaultObject = await provider.getObject(config.VaultObjectId);
     const vault = getObjectFields(vaultObject);
-    let aum = BigNumber(vault?.aum_addition);
-    let aum_deduction = BigNumber(vault?.aum_deduction);
     let short_profits = BigNumber(0);
 
     const symbols = Object.keys(config.Coin);
@@ -123,7 +121,11 @@ export class AumTaskService {
     return priceFeedsObjectIds
       .filter((item: any) => getObjectExistsResponse(item))
       .reduce((sum: BigNumber, item: any, index: number) => {
+        let aum = BigNumber(vault?.aum_addition);
+        let aum_deduction = BigNumber(vault?.aum_deduction);
+
         const pool = getObjectFields(poolsObjectIds[index]);
+        // console.log(pool);
         const field = getObjectFields(item);
 
         if (!pool || !field) {
