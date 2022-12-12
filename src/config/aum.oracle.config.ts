@@ -1,6 +1,21 @@
-import { ContractConfigType, OracleConfigType } from "./config.type";
+import { ContractConfigType, NetworkType, SymbolType, OracleConfigType, ContractConfigValueType } from "./config.type";
 
-export const contractConfig: ContractConfigType = {
+type NewSymbolType = SymbolType | 'SUI';
+
+type NewContractConfigType = {
+	[x in NetworkType]: {
+		Coin: {
+			[y in NewSymbolType]: {
+				PackageId: string,
+				PriceFeedObjectId: string,
+				Type: string,
+				PoolObjectId: string
+			}
+		}
+	} & ContractConfigValueType
+};
+
+export const contractConfig: NewContractConfigType = {
 	"DEVNET": {
 		"ExchangePackageId": "0xf2e9dc033023ad6487188991135bdf72598e3265",
 		"VaultObjectId": "0x24240041a922b9c3c241e41c790390636d83cc3a",
@@ -28,6 +43,12 @@ export const contractConfig: ContractConfigType = {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
 				"PriceFeedObjectId": "0x8b945410f8b376cd2d737c34e5f1c6def7313b17",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC",
+				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
+			},
+			"SUI": {
+				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
+				"PriceFeedObjectId": "0x0049f30fd93d3b6fd40860db27a4d1dd2bc0eabe",
+				"Type": "0x0000000000000000000000000000000000000002::sui::SUI",
 				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
 			}
 		}
@@ -60,6 +81,12 @@ export const contractConfig: ContractConfigType = {
 				"PriceFeedObjectId": "0x27d20086147d14760f41d6cf58c958e50c5a29c0",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC",
 				"PoolObjectId": "0xd252b935e3abce480c72e41deaaa91c00e51b3ca"
+			},
+			"SUI": {
+				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
+				"PriceFeedObjectId": "0x0049f30fd93d3b6fd40860db27a4d1dd2bc0eabe",
+				"Type": "0x0000000000000000000000000000000000000002::sui::SUI",
+				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
 			}
 		}
 	},
@@ -91,6 +118,12 @@ export const contractConfig: ContractConfigType = {
 				"PriceFeedObjectId": "0x27d20086147d14760f41d6cf58c958e50c5a29c0",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC",
 				"PoolObjectId": "0xd252b935e3abce480c72e41deaaa91c00e51b3ca"
+			},
+			"SUI": {
+				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
+				"PriceFeedObjectId": "0x0049f30fd93d3b6fd40860db27a4d1dd2bc0eabe",
+				"Type": "0x0000000000000000000000000000000000000002::sui::SUI",
+				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
 			}
 		}
 	}
