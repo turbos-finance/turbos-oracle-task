@@ -49,7 +49,7 @@ export const contractConfig: NewContractConfigType = {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
 				"PriceFeedObjectId": "0x0049f30fd93d3b6fd40860db27a4d1dd2bc0eabe",
 				"Type": "0x0000000000000000000000000000000000000002::sui::SUI",
-				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
+				"PoolObjectId": "0xd3882d8410c17ef7c8f0a8b8d50a08a8b90b1205"
 			}
 		}
 	},
