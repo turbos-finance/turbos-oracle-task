@@ -4,11 +4,13 @@ type NewSymbolType = SymbolType | 'SUI';
 
 type NewContractConfigType = {
 	[x in NetworkType]: {
+		PriceFeedStorageObjectId: string,
 		Coin: {
 			[y in NewSymbolType]: {
 				PackageId: string,
 				PriceFeedObjectId: string,
 				Type: string,
+				PriceFeedId: string,
 				PoolObjectId: string
 			}
 		}
@@ -17,113 +19,128 @@ type NewContractConfigType = {
 
 export const contractConfig: NewContractConfigType = {
 	"DEVNET": {
-		"ExchangePackageId": "0xf2e9dc033023ad6487188991135bdf72598e3265",
-		"VaultObjectId": "0x24240041a922b9c3c241e41c790390636d83cc3a",
-		"PositionsObjectId": "0x95521845bb75ccebd52b3ef9276ee2099f49c22f",
-		"ManagerCapObjectId": "0x5ff857e390b3d22394202acc8cfd9029c98c5f70",
+		"ExchangePackageId": "0x4c7e6fac5208f4ebe6c40523a68670b0a8d17d5e",
+		"VaultObjectId": "0x3a847239f43de4d25afba5397bcbc0f32680cde5",
+		"PositionsObjectId": "0x34c86a6018e361664ce360226346bfb34cf7e193",
+		"ManagerCapObjectId": "0xb5e5be4ed854e44f367286750929b7e7cb4018be",
 		"AumOraclePackageId": "0x8f1aa56e8ed59e34b85d1d1deb260dd9e2bf9e1e",
 		"TimeOraclePackageId": "0xeef3fbe65868da00192e59371e98ec07c6017f00",
 		"PriceOraclePackageId": "0xf1cd4d6b6e2266ee6cd055670b9983eddb085a02",
 		"AumOracleObjectId": "0xe74a7cd72b04c5a7c5000db939e34cc591d31063",
 		"TimeOracleObjectId": "0xd150885f3308ff2c6d1d5c0e7dbf1ed369cf42c3",
+		"PriceFeedStorageObjectId": "0x8b1b12dc5f79f4b95d53d7539110497638c3298b",
 		"Coin": {
 			"BTC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
 				"PriceFeedObjectId": "0x72f2750398c7258730723312da698ca574525203",
+				"PriceFeedId": "fbd7c495fcc83ec7ce6522eb44a453a70f88ef64664f1ed49e011be87ffe3525",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::btc::BTC",
-				"PoolObjectId": "0x18762db61b9267d89e27105a9a8ed7958e8651d5"
+				"PoolObjectId": "0xe1c065c4c122c0a402d683b726d8a52136fb22d3"
 			},
 			"ETH": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x4eb9b0fc93c3769a56d0d65ffe07f6cfbdd19289",
+				"PriceFeedObjectId": "0xc373f18d5fad303def9e755ac3a6dec4908c0eb2",
+				"PriceFeedId": "3b3852469b9667b95ce1ef1fe4ceba4ebba4e07b42acda4e8e3246598e5cb73f",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::eth::ETH",
-				"PoolObjectId": "0x80b2b8f7503d3f64e1bf50a98da61d7a4711cfa6"
+				"PoolObjectId": "0xf7bb458c6b88646e92851d7fb1a85dc534612065"
 			},
 			"USDC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x8b945410f8b376cd2d737c34e5f1c6def7313b17",
+				"PriceFeedObjectId": "0x8c45e88cde3fcad33fad806c24640e6fd72f1071",
+				"PriceFeedId": "348eb3a88317813f7541e4008843b907822259c008a2793e43edce2d1360e27d",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC",
-				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
+				"PoolObjectId": "0xd4a32dbec1f8da00904b5982a39708040c9ac122"
 			},
 			"SUI": {
-				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x0049f30fd93d3b6fd40860db27a4d1dd2bc0eabe",
+				"PackageId": "0x0000000000000000000000000000000000000002",
+				"PriceFeedObjectId": "0xc7e9e068606daff369b31cc1bba212ddcccc940b",
+				"PriceFeedId": "16c3533d98cb020a2304c7f26169ac2597079f9aac853dd141d0aff86f540d56",
 				"Type": "0x0000000000000000000000000000000000000002::sui::SUI",
-				"PoolObjectId": "0xd3882d8410c17ef7c8f0a8b8d50a08a8b90b1205"
+				"PoolObjectId": "0xc9b64fa3c0a00b7a4faa262c6f90ceeeba0927db"
 			}
 		}
 	},
 	"TESTNET": {
-		"ExchangePackageId": "0x8435e6fc0f2d592b321d83ce59a9425290b122e1",
-		"VaultObjectId": "0xbea9200dfb078d398961107d0186af4da31bc3d5",
-		"PositionsObjectId": "0x03d9072476f2047200a9b6e89de455806859547f",
-		"ManagerCapObjectId": "0x2563730c4ca34da85325c36e69bc462cd514a3ed",
+		"ExchangePackageId": "0x4c7e6fac5208f4ebe6c40523a68670b0a8d17d5e",
+		"VaultObjectId": "0x3a847239f43de4d25afba5397bcbc0f32680cde5",
+		"PositionsObjectId": "0x34c86a6018e361664ce360226346bfb34cf7e193",
+		"ManagerCapObjectId": "0xb5e5be4ed854e44f367286750929b7e7cb4018be",
 		"AumOraclePackageId": "0x8f1aa56e8ed59e34b85d1d1deb260dd9e2bf9e1e",
 		"TimeOraclePackageId": "0xeef3fbe65868da00192e59371e98ec07c6017f00",
-		"PriceOraclePackageId": "0x5b3447a1eff6e39ee23f0901f16e309471e12409",
+		"PriceOraclePackageId": "0xf1cd4d6b6e2266ee6cd055670b9983eddb085a02",
 		"AumOracleObjectId": "0xe74a7cd72b04c5a7c5000db939e34cc591d31063",
 		"TimeOracleObjectId": "0xd150885f3308ff2c6d1d5c0e7dbf1ed369cf42c3",
+		"PriceFeedStorageObjectId": "0x8b1b12dc5f79f4b95d53d7539110497638c3298b",
 		"Coin": {
 			"BTC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x7daac4844e7c0d619447e7b2fa6f4a218a7682ed",
+				"PriceFeedObjectId": "0x72f2750398c7258730723312da698ca574525203",
+				"PriceFeedId": "fbd7c495fcc83ec7ce6522eb44a453a70f88ef64664f1ed49e011be87ffe3525",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::btc::BTC",
-				"PoolObjectId": "0x4c2a33d9aa8d0f5efeb93fb7c2caecbdbc06d878"
+				"PoolObjectId": "0xe1c065c4c122c0a402d683b726d8a52136fb22d3"
 			},
 			"ETH": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x2bb133c11f8c3d0de399778dcd1d7a2e5577b8bb",
+				"PriceFeedObjectId": "0xc373f18d5fad303def9e755ac3a6dec4908c0eb2",
+				"PriceFeedId": "3b3852469b9667b95ce1ef1fe4ceba4ebba4e07b42acda4e8e3246598e5cb73f",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::eth::ETH",
-				"PoolObjectId": "0xf3473a8927efeaa5cb858a1494267df62177df30"
+				"PoolObjectId": "0xf7bb458c6b88646e92851d7fb1a85dc534612065"
 			},
 			"USDC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x27d20086147d14760f41d6cf58c958e50c5a29c0",
+				"PriceFeedObjectId": "0x8c45e88cde3fcad33fad806c24640e6fd72f1071",
+				"PriceFeedId": "348eb3a88317813f7541e4008843b907822259c008a2793e43edce2d1360e27d",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC",
-				"PoolObjectId": "0xd252b935e3abce480c72e41deaaa91c00e51b3ca"
+				"PoolObjectId": "0xd4a32dbec1f8da00904b5982a39708040c9ac122"
 			},
 			"SUI": {
-				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x0049f30fd93d3b6fd40860db27a4d1dd2bc0eabe",
+				"PackageId": "0x0000000000000000000000000000000000000002",
+				"PriceFeedObjectId": "0xc7e9e068606daff369b31cc1bba212ddcccc940b",
+				"PriceFeedId": "16c3533d98cb020a2304c7f26169ac2597079f9aac853dd141d0aff86f540d56",
 				"Type": "0x0000000000000000000000000000000000000002::sui::SUI",
-				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
+				"PoolObjectId": "0xc9b64fa3c0a00b7a4faa262c6f90ceeeba0927db"
 			}
 		}
 	},
 	"MAINNET": {
-		"ExchangePackageId": "0x8435e6fc0f2d592b321d83ce59a9425290b122e1",
-		"VaultObjectId": "0xbea9200dfb078d398961107d0186af4da31bc3d5",
-		"PositionsObjectId": "0x03d9072476f2047200a9b6e89de455806859547f",
-		"ManagerCapObjectId": "0x2563730c4ca34da85325c36e69bc462cd514a3ed",
+		"ExchangePackageId": "0x4c7e6fac5208f4ebe6c40523a68670b0a8d17d5e",
+		"VaultObjectId": "0x3a847239f43de4d25afba5397bcbc0f32680cde5",
+		"PositionsObjectId": "0x34c86a6018e361664ce360226346bfb34cf7e193",
+		"ManagerCapObjectId": "0xb5e5be4ed854e44f367286750929b7e7cb4018be",
 		"AumOraclePackageId": "0x8f1aa56e8ed59e34b85d1d1deb260dd9e2bf9e1e",
 		"TimeOraclePackageId": "0xeef3fbe65868da00192e59371e98ec07c6017f00",
-		"PriceOraclePackageId": "0x5b3447a1eff6e39ee23f0901f16e309471e12409",
+		"PriceOraclePackageId": "0xf1cd4d6b6e2266ee6cd055670b9983eddb085a02",
 		"AumOracleObjectId": "0xe74a7cd72b04c5a7c5000db939e34cc591d31063",
 		"TimeOracleObjectId": "0xd150885f3308ff2c6d1d5c0e7dbf1ed369cf42c3",
+		"PriceFeedStorageObjectId": "0x8b1b12dc5f79f4b95d53d7539110497638c3298b",
 		"Coin": {
 			"BTC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x7daac4844e7c0d619447e7b2fa6f4a218a7682ed",
+				"PriceFeedObjectId": "0x72f2750398c7258730723312da698ca574525203",
+				"PriceFeedId": "fbd7c495fcc83ec7ce6522eb44a453a70f88ef64664f1ed49e011be87ffe3525",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::btc::BTC",
-				"PoolObjectId": "0x4c2a33d9aa8d0f5efeb93fb7c2caecbdbc06d878"
+				"PoolObjectId": "0xe1c065c4c122c0a402d683b726d8a52136fb22d3"
 			},
 			"ETH": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x2bb133c11f8c3d0de399778dcd1d7a2e5577b8bb",
+				"PriceFeedObjectId": "0xc373f18d5fad303def9e755ac3a6dec4908c0eb2",
+				"PriceFeedId": "3b3852469b9667b95ce1ef1fe4ceba4ebba4e07b42acda4e8e3246598e5cb73f",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::eth::ETH",
-				"PoolObjectId": "0xf3473a8927efeaa5cb858a1494267df62177df30"
+				"PoolObjectId": "0xf7bb458c6b88646e92851d7fb1a85dc534612065"
 			},
 			"USDC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x27d20086147d14760f41d6cf58c958e50c5a29c0",
+				"PriceFeedObjectId": "0x8c45e88cde3fcad33fad806c24640e6fd72f1071",
+				"PriceFeedId": "348eb3a88317813f7541e4008843b907822259c008a2793e43edce2d1360e27d",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::usdc::USDC",
-				"PoolObjectId": "0xd252b935e3abce480c72e41deaaa91c00e51b3ca"
+				"PoolObjectId": "0xd4a32dbec1f8da00904b5982a39708040c9ac122"
 			},
 			"SUI": {
-				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0x0049f30fd93d3b6fd40860db27a4d1dd2bc0eabe",
+				"PackageId": "0x0000000000000000000000000000000000000002",
+				"PriceFeedObjectId": "0xc7e9e068606daff369b31cc1bba212ddcccc940b",
+				"PriceFeedId": "16c3533d98cb020a2304c7f26169ac2597079f9aac853dd141d0aff86f540d56",
 				"Type": "0x0000000000000000000000000000000000000002::sui::SUI",
-				"PoolObjectId": "0x30230651a9ec889b23a4cfe0d338bd3a537d58dd"
+				"PoolObjectId": "0xc9b64fa3c0a00b7a4faa262c6f90ceeeba0927db"
 			}
 		}
 	}
