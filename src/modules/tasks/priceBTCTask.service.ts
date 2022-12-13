@@ -42,16 +42,13 @@ export class PriceBTCTaskService {
   symbol: string;
 
   priceId: string;
-  coinPackageObjectId:string;
+  turbosPriceId: string;
+  sharedObjectId: string;
+  token: string = 'BTC';
 
   constructor(
     private readonly configService: ConfigService,
   ) {
-    // this.packageObjectId = packageObjectId;
-    // this.objectId = objectId;
-    // this.symbol = symbol;
-    // this.priceId = priceId;
-
     this.init();
   }
 
@@ -62,9 +59,11 @@ export class PriceBTCTaskService {
       return false;
     }
 
+    this.sharedObjectId = config.sharedObjectId;
+    this.packageObjectId = config.packageObjectId;
+
     const symbolConfig = config[symbol];
-    this.coinPackageObjectId = symbolConfig.coinPackageObjectId;
-    this.packageObjectId = symbolConfig.packageObjectId;
+    this.turbosPriceId = symbolConfig.turbosPriceId;
     this.objectId = symbolConfig.objectId;
     this.symbol = symbolConfig.symbol;
     this.priceId = symbolConfig.priceId;
@@ -82,8 +81,8 @@ export class PriceBTCTaskService {
   }
 
   async init() {
-    
-    const setting = await this.getSetting('BTC'.toLocaleUpperCase());
+
+    const setting = await this.getSetting(this.token.toLocaleUpperCase());
 
     if (!setting) {
       return;
@@ -98,16 +97,13 @@ export class PriceBTCTaskService {
     this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
     await this.getKeypair();
 
-    // const objects = await this.provider.getObjectsOwnedByAddress(this.walletAddress);
-    // this.obj = objects.find((item: SuiObjectInfo) => item.type.indexOf(`${this.packageObjectId}::price::AuthorityCap`) > -1);
-
     if (!this.signer || !this.walletAddress) return;
 
     this.run();
   }
 
   async getKeypair() {
-    const keypair = Ed25519Keypair.deriveKeypair(this.configService.get(`PRICE_${this.symbol}_PRIVACYKEY`));
+    const keypair = Ed25519Keypair.deriveKeypair(this.configService.get(`PRICE_${this.token}_PRIVACYKEY`));
     let address = keypair?.getPublicKey().toSuiAddress() || null;
     if (address && !address.startsWith('0x')) {
       address = `0x${address}`;
@@ -140,12 +136,12 @@ export class PriceBTCTaskService {
     try {
       const moveCallTxn = await this.signer.executeMoveCall({
         packageObjectId: this.packageObjectId,
-        module: 'price',
-        function: 'update_price_feed',
-        typeArguments: [this.coinPackageObjectId],
+        module: 'turbos_price',
+        function: 'update_price',
+        typeArguments: [],
         arguments: [
-          // this.obj.objectId,
-          this.objectId,
+          this.sharedObjectId,
+          this.turbosPriceId,
           price,
           ema_price,
           publishTime

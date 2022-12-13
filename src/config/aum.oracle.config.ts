@@ -23,13 +23,13 @@ export const contractConfig: NewContractConfigType = {
 		"ManagerCapObjectId": "0x5ff857e390b3d22394202acc8cfd9029c98c5f70",
 		"AumOraclePackageId": "0x8f1aa56e8ed59e34b85d1d1deb260dd9e2bf9e1e",
 		"TimeOraclePackageId": "0xeef3fbe65868da00192e59371e98ec07c6017f00",
-		"PriceOraclePackageId": "0x3016c3368a75b07f1ec36cd66b9bebd9b0b359a0",
+		"PriceOraclePackageId": "0xf1cd4d6b6e2266ee6cd055670b9983eddb085a02",
 		"AumOracleObjectId": "0xe74a7cd72b04c5a7c5000db939e34cc591d31063",
 		"TimeOracleObjectId": "0xd150885f3308ff2c6d1d5c0e7dbf1ed369cf42c3",
 		"Coin": {
 			"BTC": {
 				"PackageId": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a",
-				"PriceFeedObjectId": "0xc9b7b0d3aa42237e76d1af758a7bb90215e70569",
+				"PriceFeedObjectId": "0x72f2750398c7258730723312da698ca574525203",
 				"Type": "0x33e5b1bafadeca4c678f7bae6cea3d326a44a02a::btc::BTC",
 				"PoolObjectId": "0x18762db61b9267d89e27105a9a8ed7958e8651d5"
 			},

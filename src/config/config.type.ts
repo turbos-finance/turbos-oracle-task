@@ -22,13 +22,15 @@ export type TokenFaucetConfigType = {
 export type TokenTaskConfigType = {
   [x in NetworkType]: {
     [y in SymbolType]: {
-      immutableToken?: string,
-      coinPackageObjectId: string,
-      packageObjectId: string,
-      objectId: string,
+      type: string,
+      objectId?: string,
+      turbosPriceId: string,
       symbol: string,
       priceId: string
     }
+  } & {
+    packageObjectId: string,
+    sharedObjectId: string
   }
 }
 
