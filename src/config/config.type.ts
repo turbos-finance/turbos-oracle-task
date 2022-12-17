@@ -46,10 +46,10 @@ export type ContractConfigValueType = {
   VaultObjectId: string,
   PositionsObjectId: string,
   ManagerCapObjectId: string,
-  AumOraclePackageId: string,
+  // AumOraclePackageId: string,
   TimeOraclePackageId: string,
   PriceOraclePackageId: string,
-  AumOracleObjectId: string,
+  // AumOracleObjectId: string,
   TimeOracleObjectId: string,
   Coin: {
     [y in SymbolType]: {
