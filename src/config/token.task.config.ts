@@ -2,24 +2,24 @@ import { TokenTaskConfigType } from "./config.type";
 
 const tokenTaskConfig: TokenTaskConfigType = {
 	'DEVNET': {
-		packageObjectId: '0x71e60c1c4c8fb5e6ae419ad7b122483218471f85',
-		sharedObjectId: '0x1d6df39b01605dd50cb0f4bb3c27e03eefdaedee',
+		packageObjectId: '0x4d5445f5e06ba3598d5f3c851ded4240684c06a8',
+		sharedObjectId: '0x416289c352ebbe67e72629685d0b44739eb662c3',
 		'BTC': {
-			type: '0x2d37b4f2e8382ed9494bac9a9f4a1ddb5b067d67::btc::BTC',
+			type: '0xbbb52e39a23992c3ae1486a0f976c4386d76691c::btc::BTC',
 			// objectId: '0x72f2750398c7258730723312da698ca574525203',
 			turbosPriceId: 'fbd7c495fcc83ec7ce6522eb44a453a70f88ef64664f1ed49e011be87ffe3525',
 			symbol: 'BTCUSD',
 			priceId: '0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b'
 		},
 		'ETH': {
-			type: '0x2d37b4f2e8382ed9494bac9a9f4a1ddb5b067d67::eth::ETH',
+			type: '0xbbb52e39a23992c3ae1486a0f976c4386d76691c::eth::ETH',
 			// objectId: '0x4eb9b0fc93c3769a56d0d65ffe07f6cfbdd19289',
 			turbosPriceId: '3b3852469b9667b95ce1ef1fe4ceba4ebba4e07b42acda4e8e3246598e5cb73f',
 			symbol: 'ETHUSD',
 			priceId: '0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6'
 		},
 		'USDC': {
-			type: '0x2d37b4f2e8382ed9494bac9a9f4a1ddb5b067d67::usdc::USDC',
+			type: '0xbbb52e39a23992c3ae1486a0f976c4386d76691c::usdc::USDC',
 			// objectId: '0x8b945410f8b376cd2d737c34e5f1c6def7313b17',
 			turbosPriceId: '348eb3a88317813f7541e4008843b907822259c008a2793e43edce2d1360e27d',
 			symbol: 'USDCUSD',

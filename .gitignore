@@ -3,6 +3,8 @@
 /node_modules
 /build
 .env
+turbos_nodejs_oracle
+turbos_nodejs_oracle.zip
 
 # Logs
 logs
