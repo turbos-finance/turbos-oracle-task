@@ -20,9 +20,13 @@ import {
   Ed25519PublicKey,
   mnemonicToSeedHex,
   getTransactionDigest,
+  SuiEventEnvelope,
+  getEvents,
 } from '@mysten/sui.js';
 
 import { ConfigService } from '../config/config.service';
+import { contractConfig } from '../../config/aum.oracle.config';
+import { NetworkType, SymbolType } from '../../config/config.type';
 
 @Injectable()
 export class TasksService {
@@ -35,11 +39,41 @@ export class TasksService {
     // this.init();
   }
 
-  // async init() {
-  //   this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
-  //   this.signer = await this.getKeypair();
-    
-  // }
+  async init() {
+    const network = this.configService.get('NETWORK');
+    this.provider = new JsonRpcProvider('https://fullnode.devnet.sui.io', {
+      // you can also skip providing this field if you don't plan to interact with the faucet
+      faucetURL: 'https://faucet.devnet.sui.io/gas',
+    });
+
+    const config = contractConfig[network as NetworkType];
+    const coin = config.Coin;
+    const symbols = Object.keys(coin);
+    const result = await this.provider.getEvents({ MoveEvent: `${config.ExchangePackageId}::exchange::SwapEvent` }, null, 10);
+    const trans = result.data.map((item: SuiEventEnvelope) => {
+      const event = (item.event as any).moveEvent;
+      const tokenInSymbol = symbols.find((item: string) => coin[item as SymbolType].PoolObjectId === event.fields.token_in_pool_id);
+      const tokenOutPoolId = symbols.find((item: string) => coin[item as SymbolType].PoolObjectId === event.fields.token_out_pool_id)
+      return {
+        packageId: event.packageId,
+        sender: event.sender,
+        type: event.sender,
+        timestamp: item.timestamp,
+        txDigest: item.txDigest,
+        receiver: event.fields.receiver,
+        tokenInAmount: event.fields.token_in_amount,
+        tokenInPoolId: event.fields.token_in_pool_id,
+        tokenInSymbol,
+        tokenOutAmount: event.fields.token_out_amount,
+        tokenOutPoolId,
+        tokenOutSymbol: event.fields.token_out_pool_id
+      }
+    });
+
+    this.provider.subscribeEvent({ MoveEventType: `${config.ExchangePackageId}::exchange::SwapEvent` }, (event: SuiEventEnvelope) => {
+      console.log(event);
+    });
+  }
 
   // async getKeypair() {
   //   const keypair = Ed25519Keypair.deriveKeypair(this.configService.get('PRIVACYKEY'))

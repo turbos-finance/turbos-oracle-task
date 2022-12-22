@@ -7,6 +7,7 @@ import { ConfigService } from "../config/config.service";
 
 // mysql orm
 import { FaucetEntity } from "../../entities/faucet.entity";
+import { TradesEntity } from "../../entities/trades.entity";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { FaucetEntity } from "../../entities/faucet.entity";
         database: configService.get('DB_DATABASE'),
         entities: [
           FaucetEntity,
+          TradesEntity
         ],
         synchronize: false,
       }),
