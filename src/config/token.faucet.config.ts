@@ -3,19 +3,19 @@ import { TokenFaucetConfigType } from "./config.type";
 const tokenFaucetConfig: TokenFaucetConfigType = {
 	'DEVNET': {
 		'BTC': {
-			type: '0xbbb52e39a23992c3ae1486a0f976c4386d76691c::btc::BTC',
+			type: '0xbe76f977de1d4cfae56b79f6f87c1436b6da4abd::btc::BTC',
 			symbol: 'BTC',
 			balance: 1,
 			decimals: 9
 		},
 		'ETH': {
-			type: '0xbbb52e39a23992c3ae1486a0f976c4386d76691c::eth::ETH',
+			type: '0xbe76f977de1d4cfae56b79f6f87c1436b6da4abd::eth::ETH',
 			symbol: 'ETH',
 			balance: 10,
 			decimals: 9
 		},
 		'USDC': {
-			type: '0xbbb52e39a23992c3ae1486a0f976c4386d76691c::usdc::USDC',
+			type: '0xbe76f977de1d4cfae56b79f6f87c1436b6da4abd::usdc::USDC',
 			symbol: 'USDC',
 			balance: 10000,
 			decimals: 9
