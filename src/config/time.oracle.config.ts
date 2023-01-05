@@ -2,8 +2,8 @@ import { OracleConfigType } from "./config.type";
 
 export const timeOracleConfig: OracleConfigType = {
   "DEVNET": {
-    "sharedObjectId": "0x1b9979aa6f60cdc758656952184054ff611453cc",
-    "packageObjectId": "0xd702f90e8c193935c1698a3d082b5dbf4c440805",
+    "sharedObjectId": "0x06ad31b09d9e8bd03e5207b2a7e7c5a0970769a8",
+    "packageObjectId": "0x76506643aa4c9c29645a0c93e261f47cf39766a8",
   },
   "TESTNET": {
     "sharedObjectId": "0xd150885f3308ff2c6d1d5c0e7dbf1ed369cf42c3",

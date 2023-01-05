@@ -142,9 +142,9 @@ export class PriceETHTaskService {
         arguments: [
           this.sharedObjectId,
           this.turbosPriceId,
-          price,
-          ema_price,
-          publishTime
+          price.toString(),
+          ema_price.toString(),
+          publishTime.toString()
         ],
         gasBudget: 10000,
       });

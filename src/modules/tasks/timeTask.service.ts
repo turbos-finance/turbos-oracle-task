@@ -88,7 +88,7 @@ export class TimeTaskService {
         arguments: [
           this.obj.objectId,
           this.shared,
-          Date.now()
+          Date.now().toString()
         ],
         gasBudget: 10000,
       });
