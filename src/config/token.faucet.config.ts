@@ -1,5 +1,7 @@
 import { TokenFaucetConfigType } from "./config.type";
 
+export const tokenPackageId = '0x6e6100221904c8a8e1984190c1c371ba449cd706';
+
 const tokenFaucetConfig: TokenFaucetConfigType = {
 	'DEVNET': {
 		'BTC': {

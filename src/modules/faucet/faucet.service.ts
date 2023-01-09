@@ -24,7 +24,7 @@ import {
   SuiExecuteTransactionResponse
 } from '@mysten/sui.js';
 import { alreadyClaimedException, insufficientTokenBalanceException, tokenNotExistException, wrongSuiAddressException } from "../../exception/auth.exception";
-import tokenFaucetConfig from "../../config/token.faucet.config";
+import tokenFaucetConfig, { tokenPackageId } from "../../config/token.faucet.config";
 
 import { ConfigService } from '../config/config.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -49,12 +49,14 @@ export class FaucetService {
   }
 
   async saveFaucet(account: string, symbol: string, isFaucet: number = 0): Promise<FaucetEntity> {
+    const tokenFaucetConfigNetwork = tokenFaucetConfig[this.configService.get('NETWORK')];
     const faucetDate = this.faucetRepository.create();
     const data = this.faucetRepository.merge(faucetDate, {
       account,
       symbol,
       lastTimestamp: Date.now(),
-      isFaucet
+      isFaucet,
+      packageId: tokenPackageId
     });
     return await this.faucetRepository.save(data);
   }
@@ -62,6 +64,7 @@ export class FaucetService {
   async init() {
     this.provider = new JsonRpcProvider(Network[this.configService.get('NETWORK')]);
     await this.getKeypair();
+    this.run();
   }
 
   async getKeypair() {
@@ -117,9 +120,11 @@ export class FaucetService {
 
   async run() {
     this.isFaucetRun = true;
+    const tokenFaucetConfigNetwork = tokenFaucetConfig[this.configService.get('NETWORK')];
     const faucetData = await this.faucetRepository.findOne({
       where: {
-        isFaucet: 0
+        isFaucet: 0,
+        packageId: tokenPackageId
       },
       order: {
         lastTimestamp: 'ASC'
@@ -131,7 +136,7 @@ export class FaucetService {
       return;
     }
 
-    const config = tokenFaucetConfig[this.configService.get('NETWORK')][faucetData.symbol.toLocaleUpperCase()];
+    const config = tokenFaucetConfigNetwork[faucetData.symbol.toLocaleUpperCase()];
 
     const actualAmount = BigInt(config.balance * 10 ** config.decimals + 1000);
     const coinsWithSufficientAmount = await this.provider.selectCoinsWithBalanceGreaterThanOrEqual(

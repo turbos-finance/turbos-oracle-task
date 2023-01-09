@@ -20,4 +20,7 @@ export class FaucetEntity {
 
   @Column({ name: "is_faucet", type: "int" })
   isFaucet: number;
+
+  @Column({ name: "package_id" })
+  packageId: string;
 }
