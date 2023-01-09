@@ -139,28 +139,33 @@ export class FaucetService {
     const config = tokenFaucetConfigNetwork[faucetData.symbol.toLocaleUpperCase()];
 
     const actualAmount = BigInt(config.balance * 10 ** config.decimals + 1000);
-    const coinsWithSufficientAmount = await this.provider.selectCoinsWithBalanceGreaterThanOrEqual(
-      this.address,
-      actualAmount,
-      config.type
-    );
 
-    if (coinsWithSufficientAmount.length < 1) {
-      this.isFaucetRun = false;
-      return;
+    try {
+      const coinsWithSufficientAmount = await this.provider.selectCoinsWithBalanceGreaterThanOrEqual(
+        this.address,
+        actualAmount,
+        config.type
+      );
+
+      if (coinsWithSufficientAmount.length < 1) {
+        this.isFaucetRun = false;
+        return;
+      }
+
+      const result = coinsWithSufficientAmount.map((item: GetObjectDataResponse | SuiMoveObject) => Coin.getID(item));
+
+      const res = await this.signer.pay({
+        inputCoins: result,
+        recipients: [faucetData.account],
+        amounts: [config.balance * 10 ** config.decimals],
+        gasBudget: 1000,
+      });
+
+      console.log(`${faucetData.symbol} faucet transaction: ${getTransactionDigest(res)}`);
+      await this.saveFaucet(faucetData.account, faucetData.symbol, 1);
+    } catch (err: any) {
+      console.log(err.message);
     }
-
-    const result = coinsWithSufficientAmount.map((item: GetObjectDataResponse | SuiMoveObject) => Coin.getID(item));
-
-    const res = await this.signer.pay({
-      inputCoins: result,
-      recipients: [faucetData.account],
-      amounts: [config.balance * 10 ** config.decimals],
-      gasBudget: 1000,
-    });
-
-    console.log(`${faucetData.symbol} faucet transaction: ${getTransactionDigest(res)}`);
-    await this.saveFaucet(faucetData.account, faucetData.symbol, 1);
     this.run();
   }
 }
